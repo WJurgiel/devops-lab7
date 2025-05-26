@@ -17,7 +17,7 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run:  |
-          pip install numpy
+          pip install numpy pytest
           cd ./env_414539/main
       - name: Run unit tests
         run: |
