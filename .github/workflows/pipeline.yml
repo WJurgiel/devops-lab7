@@ -43,5 +43,4 @@ jobs:
         run: |
           cd ./env_414539/main
           pytest app_test.py -k "test_calculator_operations"
-  deployment:
 
