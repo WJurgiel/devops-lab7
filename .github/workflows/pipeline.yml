@@ -1,0 +1,41 @@
+name: lab8_414539
+
+on:
+  push:
+    branches:
+      - trunk-lab8
+
+jobs:
+  run_unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: actions/checkout@v4
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run:  |
+          pip install numpy
+          cd ./env_414539/main
+      - name: Run unit tests
+        run: |
+          pytest calculator_test.py -k "test_dodawanie or test_odejmowanie or test_mnozenie or test_dzielenie"
+  run_functional_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: actions/checkout@v4
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run:  |
+          cd ./env_414539/main
+          python -m pip install -r requirements.txt
+      - name: Run functional tests
+        run: |
+          pytest app_test.py -k "test_calculator_operations"
+  
