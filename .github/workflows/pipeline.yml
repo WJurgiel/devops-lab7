@@ -6,27 +6,98 @@ on:
       - trunk
     
 jobs:
-  build:
+  test_dodawanie:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Shared setup
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install pytest
+          cd ./env_414539
+          python -m pip install -r requirements.txt
+      - name: Run test_dodawanie
+        run: |
+          cd ./env_414539
+          pytest calculator_test.py -k "test_dodawanie"
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11'
+  test_odejmowanie:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Shared setup
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install pytest
+          cd ./env_414539
+          python -m pip install -r requirements.txt
+      - name: Run test_odejmowanie
+        run: |
+          cd ./env_414539
+          pytest calculator_test.py -k "test_odejmowanie"
 
-    - name: Install libs for testing
-      run: |
-        pip  install pytest 
-    
-    - name: prepare environemnt 
-      run: |
-         cd ./env_414539 && python -m pip install -r requirements.txt
-      
+  test_mnozenie:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Shared setup
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install pytest
+          cd ./env_414539
+          python -m pip install -r requirements.txt
+      - name: Run test_mnozenie
+        run: |
+          cd ./env_414539
+          pytest calculator_test.py -k "test_mnozenie"
 
-    - name: Run test
-      run: |
-        cd ./env_414539 && pytest calculator_test.py
+  test_dzielenie:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Shared setup
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install pytest
+          cd ./env_414539
+          python -m pip install -r requirements.txt
+      - name: Run test_dzielenie
+        run: |
+          cd ./env_414539
+          pytest calculator_test.py -k "test_dzielenie"
+
+  new_test:
+    needs: [test_dodawanie, test_odejmowanie, test_mnozenie, test_dzielenie]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Shared setup
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install pytest
+          cd ./env_414539
+          python -m pip install -r requirements.txt
+      - name: Run new tests
+        run: |
+          cd ./env_414539
+          pytest calculator_test.py -k "test_create_dataset or test_get_mean_price or test_get_blue_cars or test_get_doors_count"
