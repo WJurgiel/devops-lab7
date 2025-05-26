@@ -35,8 +35,13 @@ jobs:
         run:  |
           cd ./env_414539/main
           python -m pip install -r requirements.txt
+      - name: Run Flask server
+        run: |
+          export FLASK_APP = ./env_414539/main/app_test.py
+          flask run & sleep 5
       - name: Run functional tests
         run: |
           cd ./env_414539/main
           pytest app_test.py -k "test_calculator_operations"
-  
+  deployment:
+
