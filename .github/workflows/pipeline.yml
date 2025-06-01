@@ -23,6 +23,7 @@ jobs:
           cd ./env_414539/main
           pytest calculator_test.py -k "test_dodawanie or test_odejmowanie or test_mnozenie or test_dzielenie"
   run_functional_tests:
+    needs: run_unit_tests
     runs-on: ubuntu-latest
     steps:
       - name: Setup
@@ -44,6 +45,7 @@ jobs:
           cd ./env_414539/main
           pytest app_test.py -k "test_calculator_operations"
   deployment:
+    needs: run_functional_tests
     name: Create image and push to Docker Hub
     runs-on: ubuntu-latest
     permissions:
@@ -70,7 +72,7 @@ jobs:
         id: push
         uses: docker/build-push-action@v6
         with:
-          context: ./env_414539/main/
+          context: ./env_414539/
           file: ./env_414539/dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
